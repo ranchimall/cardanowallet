@@ -38404,20 +38404,15 @@ ${f.stack}` : o;
   window.updateURL = Kit;
   window.clearURL = Yit;
   window.searchTransactions = Ko;
-  console.log("[DeepLink] main.js loaded, URL:", window.location.href);
-  console.log("[DeepLink] URL search params:", window.location.search);
-  console.log("[DeepLink] document.readyState:", document.readyState);
   function dv() {
     setTimeout(() => {
       try {
         const f = new URLSearchParams(window.location.search);
-        (f.get("address") || f.get("tx")) && (console.log("[DeepLink] Processing URL parameters after full page load"), console.log("[DeepLink] window.searchTransactions available:", typeof window.searchTransactions), console.log("[DeepLink] window.cardanoCrypto available:", typeof window.cardanoCrypto), Qit());
+        (f.get("address") || f.get("tx")) && Qit();
       } catch (f) {
         console.error("[DeepLink] Error processing URL parameters:", f);
       }
     }, 1e3);
   }
-  document.readyState === "complete" ? (console.log("[DeepLink] Page already loaded, processing immediately"), dv()) : (console.log("[DeepLink] Waiting for load event"), window.addEventListener("load", () => {
-    console.log("[DeepLink] Load event fired"), dv();
-  }));
+  document.readyState === "complete" ? dv() : window.addEventListener("load", dv);
 })();
