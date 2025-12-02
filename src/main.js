@@ -275,7 +275,7 @@ async function handleGenerate() {
         </div>
       </div>
       
-      ${displayCardanoWallet(wallet.Cardano)}
+      ${displayCardanoWallet(wallet.Cardano, wallet.originalKey || wallet.extractedKey)}
       ${wallet.BTC ? displayBlockchain('Bitcoin', 'fab fa-bitcoin', wallet.BTC) : ''}
       ${wallet.FLO ? displayBlockchain('FLO', 'fas fa-leaf', wallet.FLO) : ''}
     `;
@@ -342,7 +342,7 @@ async function handleRecoverPrivateKey() {
         </div>
       </div>
       
-      ${displayCardanoWallet(wallet.Cardano)}
+      ${displayCardanoWallet(wallet.Cardano, wallet.originalKey || wallet.extractedKey)}
       ${wallet.BTC ? displayBlockchain('Bitcoin', 'fab fa-bitcoin', wallet.BTC) : ''}
       ${wallet.FLO ? displayBlockchain('FLO', 'fas fa-leaf', wallet.FLO) : ''}
     `;
@@ -993,7 +993,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Display Functions
 
 
-function displayCardanoWallet(cardano) {
+function displayCardanoWallet(cardano, masterKey) {
   return `
     <div class="blockchain-section">
       <div class="blockchain-header">
@@ -1019,12 +1019,12 @@ function displayCardanoWallet(cardano) {
           </button>
         </div>
       </div>` : ''}
-      ${cardano.rootKey ? `
+      ${masterKey ? `
       <div class="detail-row">
         <label>Private Key:</label>
         <div class="value-container">
-          <code style="font-size: 0.75rem;">${cardano.rootKey}</code>
-          <button class="btn-icon" onclick="copyToClipboard('${cardano.rootKey}')">
+          <code style="font-size: 0.85rem;">${masterKey}</code>
+          <button class="btn-icon" onclick="copyToClipboard('${masterKey}')">
             <i class="fas fa-copy"></i>
           </button>
         </div>
