@@ -674,13 +674,17 @@ async function searchTransactions(page = 1) {
       const date = tx.timestamp ? new Date(typeof tx.timestamp === 'string' ? tx.timestamp : tx.timestamp * 1000).toLocaleString() : 'Unknown Date';
       const fees = tx.fees ? (Number(tx.fees) / 1000000).toFixed(6) : 'N/A';
       
-      // Calculate total output amount (approximate value transferred)
+      // Calculate amounts
       const totalOutput = tx.outputs ? tx.outputs.reduce((acc, out) => acc + BigInt(out.value), 0n) : 0n;
-      const amountAda = (Number(totalOutput) / 1000000).toFixed(6);
+      const totalOutputAda = (Number(totalOutput) / 1000000).toFixed(6);
+      
+      // Get first output amount
+      const firstOutput = tx.outputs && tx.outputs.length > 0 ? tx.outputs[0] : null;
+      const firstOutputAda = firstOutput ? (Number(BigInt(firstOutput.value)) / 1000000).toFixed(6) : '0.000000';
       
       // Get From/To (first ones for simplicity)
       let fromAddr = tx.inputs && tx.inputs.length > 0 ? tx.inputs[0].address : 'Unknown';
-      let toAddr = tx.outputs && tx.outputs.length > 0 ? tx.outputs[0].address : 'Unknown';
+      let toAddr = firstOutput ? firstOutput.address : 'Unknown';
       
       // Convert hex to bech32
       if (fromAddr !== 'Unknown') fromAddr = cardanoAPI.hexToAddress(fromAddr);
@@ -704,7 +708,7 @@ async function searchTransactions(page = 1) {
               <div class="tx-icon"><i class="fas fa-file-alt"></i></div>
               <div class="tx-main-info">
                 <h4 class="tx-direction-label">Transaction Details</h4>
-                <div class="tx-amount">${amountAda} ADA</div>
+                <div class="tx-amount">${firstOutputAda} ADA</div>
               </div>
             </div>
             <div class="tx-right">
@@ -725,12 +729,16 @@ async function searchTransactions(page = 1) {
               <span class="tx-value full-address" onclick="copyToClipboard('${fromAddr}')" title="Click to copy">${fromAddr}</span>
             </div>
             <div class="tx-detail-row">
-              <span class="tx-label">To:</span>
+              <span class="tx-label">To (Primary):</span>
               <span class="tx-value full-address" onclick="copyToClipboard('${toAddr}')" title="Click to copy">${toAddr}</span>
             </div>
             <div class="tx-detail-row">
-              <span class="tx-label">Amount:</span>
-              <span class="tx-value">${amountAda} ADA</span>
+              <span class="tx-label">Amount Sent:</span>
+              <span class="tx-value">${firstOutputAda} ADA</span>
+            </div>
+            <div class="tx-detail-row">
+              <span class="tx-label">Total Output:</span>
+              <span class="tx-value">${totalOutputAda} ADA <span style="font-size: 0.8em; color: rgba(255,255,255,0.6);"></span></span>
             </div>
             <div class="tx-detail-row">
               <span class="tx-label">Gas Used:</span>
