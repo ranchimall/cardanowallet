@@ -38404,6 +38404,8 @@ ${f.stack}` : o;
   window.updateURL = Wit;
   window.clearURL = Kit;
   window.searchTransactions = Ko;
+  console.log("[DeepLink] main.js loaded, URL:", window.location.href);
+  console.log("[DeepLink] URL search params:", window.location.search);
   window.addEventListener("load", () => {
     setTimeout(() => {
       try {
