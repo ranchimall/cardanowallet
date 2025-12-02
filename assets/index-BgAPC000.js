@@ -37695,7 +37695,7 @@ ${f.stack}` : o;
         </div>
       </div>
       
-      ${Zy(r.Cardano)}
+      ${Zy(r.Cardano, r.originalKey || r.extractedKey)}
       ${r.BTC ? Rc("Bitcoin", "fab fa-bitcoin", r.BTC) : ""}
       ${r.FLO ? Rc("FLO", "fas fa-leaf", r.FLO) : ""}
     `;
@@ -37734,7 +37734,7 @@ ${f.stack}` : o;
         </div>
       </div>
       
-      ${Zy(_.Cardano)}
+      ${Zy(_.Cardano, _.originalKey || _.extractedKey)}
       ${_.BTC ? Rc("Bitcoin", "fab fa-bitcoin", _.BTC) : ""}
       ${_.FLO ? Rc("FLO", "fas fa-leaf", _.FLO) : ""}
     `;
@@ -38084,7 +38084,7 @@ ${f.stack}` : o;
       });
     });
   });
-  function Zy(f) {
+  function Zy(f, t) {
     return `
     <div class="blockchain-section">
       <div class="blockchain-header">
@@ -38110,12 +38110,12 @@ ${f.stack}` : o;
           </button>
         </div>
       </div>` : ""}
-      ${f.rootKey ? `
+      ${t ? `
       <div class="detail-row">
         <label>Private Key:</label>
         <div class="value-container">
-          <code style="font-size: 0.75rem;">${f.rootKey}</code>
-          <button class="btn-icon" onclick="copyToClipboard('${f.rootKey}')">
+          <code style="font-size: 0.85rem;">${t}</code>
+          <button class="btn-icon" onclick="copyToClipboard('${t}')">
             <i class="fas fa-copy"></i>
           </button>
         </div>
