@@ -1611,16 +1611,25 @@ function loadFromURL() {
 
 window.updateURL = updateURL;
 window.clearURL = clearURL;
+window.searchTransactions = searchTransactions;
 
-window.addEventListener('DOMContentLoaded', () => {
-  loadFromURL();
-});
+// Function to process URL parameters
+function processURLParams() {
+  setTimeout(() => {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('address') || urlParams.get('tx')) {
+        loadFromURL();
+      }
+    } catch (error) {
+      console.error('[DeepLink] Error processing URL parameters:', error);
+    }
+  }, 1000);
+}
 
-window.addEventListener('load', () => {
-  // Only run if not already processed
-  const urlParams = new URLSearchParams(window.location.search);
-  if ((urlParams.get('address') || urlParams.get('tx')) && !window.deepLinkProcessed) {
-    window.deepLinkProcessed = true;
-    loadFromURL();
-  }
-});
+// Check if page is already loaded 
+if (document.readyState === 'complete') {
+  processURLParams();
+} else {
+  window.addEventListener('load', processURLParams);
+}
