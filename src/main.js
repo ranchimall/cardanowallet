@@ -659,7 +659,7 @@ async function searchTransactions(page = 1) {
     try {
       const tx = await cardanoAPI.getTransaction(query);
       
-      if (!tx || tx.error) {
+      if (!tx) {
         txList.innerHTML = '<div class="no-transactions">Transaction not found.</div>';
         return;
       }
@@ -671,7 +671,7 @@ async function searchTransactions(page = 1) {
       const statusIcon = status === 'confirmed' ? 'fa-check-circle' :
                          status === 'pending' ? 'fa-clock' : 'fa-exclamation-circle';
 
-      const date = tx.timestamp ? new Date(typeof tx.timestamp === 'string' ? tx.timestamp : tx.timestamp * 1000).toLocaleString() : 'Unknown Date';
+      const date = tx.timestamp ? new Date(typeof tx.timestamp === 'string' ? tx.timestamp : tx.timestamp * 1000).toLocaleString() : 'Pending...';
       const fees = tx.fees ? (Number(tx.fees) / 1000000).toFixed(6) : 'N/A';
       
       // Calculate amounts
