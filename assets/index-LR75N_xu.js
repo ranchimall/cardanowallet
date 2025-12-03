@@ -37882,11 +37882,11 @@ ${f.stack}` : o;
         window.updateURL && window.updateURL("tx", d), k.style.display = "none", h.style.display = "none", w.style.display = "none", Y && (Y.style.display = "none"), c.innerHTML = '<div class="loading-state"><i class="fas fa-spinner fa-spin"></i></div>';
         try {
           const V = await vo.getTransaction(d);
-          if (!V || V.error) {
+          if (!V) {
             c.innerHTML = '<div class="no-transactions">Transaction not found.</div>';
             return;
           }
-          const xt = V.status || "confirmed", ct = V.statusLabel || "Confirmed", at = V.statusColor || "#28a745", rt = xt === "confirmed" ? "fa-check-circle" : xt === "pending" ? "fa-clock" : "fa-exclamation-circle", pt = V.timestamp ? new Date(typeof V.timestamp == "string" ? V.timestamp : V.timestamp * 1e3).toLocaleString() : "Unknown Date", H = V.fees ? (Number(V.fees) / 1e6).toFixed(6) : "N/A", st = V.outputs ? V.outputs.reduce((Ze, Wt) => Ze + BigInt(Wt.value), 0n) : 0n, et = (Number(st) / 1e6).toFixed(6), Ot = V.outputs && V.outputs.length > 0 ? V.outputs[0] : null, kt = Ot ? (Number(BigInt(Ot.value)) / 1e6).toFixed(6) : "0.000000";
+          const xt = V.status || "confirmed", ct = V.statusLabel || "Confirmed", at = V.statusColor || "#28a745", rt = xt === "confirmed" ? "fa-check-circle" : xt === "pending" ? "fa-clock" : "fa-exclamation-circle", pt = V.timestamp ? new Date(typeof V.timestamp == "string" ? V.timestamp : V.timestamp * 1e3).toLocaleString() : "Pending...", H = V.fees ? (Number(V.fees) / 1e6).toFixed(6) : "N/A", st = V.outputs ? V.outputs.reduce((Ze, Wt) => Ze + BigInt(Wt.value), 0n) : 0n, et = (Number(st) / 1e6).toFixed(6), Ot = V.outputs && V.outputs.length > 0 ? V.outputs[0] : null, kt = Ot ? (Number(BigInt(Ot.value)) / 1e6).toFixed(6) : "0.000000";
           let Zt = V.inputs && V.inputs.length > 0 ? V.inputs[0].address : "Unknown", qe = Ot ? Ot.address : "Unknown";
           Zt !== "Unknown" && (Zt = vo.hexToAddress(Zt)), qe !== "Unknown" && (qe = vo.hexToAddress(qe));
           const Ge = V.message ? `
